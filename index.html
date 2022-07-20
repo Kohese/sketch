@@ -12,10 +12,9 @@
     <div class="body-container">
       <div class="options">
         <input type="color" id="colorPicker" value="#000000" />
-        <button id="color">Color Mode</button>
-        <button id="rainbow">Rainbow Mode</button>
-        <button id="eraser">Eraser</button>
-        <button id="clear">Clear</button>
+        <button id="color" onclick="updateBtn(this.id)">Color Mode</button>
+        <button id="rainbow" onclick="updateBtn(this.id)">Rainbow Mode</button>
+        <button id="clear" onclick="updateBtn(this.id)">Clear</button>
         <div id="range">
           <input type="range" name="grid" id="slider" min="1" max="64" value="16"/>
         </div>

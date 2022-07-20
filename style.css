@@ -34,12 +34,13 @@ body {
   margin: auto;
 }
 
+
 .grid-item {
   padding: 1em;
   column-gap: 200px;
   border: 1px solid #ddd;
   text-align: center;
-
+  background-color: #ddd;
 }
 
 .body-container {
