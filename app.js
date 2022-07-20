@@ -18,16 +18,17 @@ const defaultId = "color";
 let currentColor = defaultColor;
 let currentSize = size;
 let currentId = defaultId;
+let val = `${slider.value} x ${slider.value}`;
 
 // FUNCTION TO RENDER THE GRID
 const makeRows = (rows) => {
-  container.style.gridTemplateColumns = `repeat(${size}, 1fr)`
-  container.style.gridTemplateRows = `repeat(${size}, 1fr)`
+  container.style.setProperty('--grid-rows', rows);
+  container.style.setProperty('--grid-cols', rows);
   range.insertBefore(h1, slider);
   for (let i = 0; i < rows * rows; i++) {
     const div = document.createElement("div");
     div.addEventListener("mouseover", change);
-    div.addEventListener('mousedown', change)
+    div.addEventListener("mousedown", change);
     container.appendChild(div).classList.add("grid-item");
   }
 };
@@ -47,15 +48,26 @@ function setSize(newSize) {
   return currentSize;
 }
 
+function updateSize(e) {
+  h1.textContent = `${e} x ${e}`;
+}
+
 function setCurrent(mode) {
-  activeBtn(mode)
-  currentId = mode
-  console.log(currentId)
+  activeBtn(mode);
+  currentId = mode;
+  console.log(currentId);
+}
+
+function changeSize(value) {
+  setSize(value)
+  updateSize(value)
+  reloadGrid()
 }
 
 function clear() {
   container.innerHTML = "";
 }
+
 // GENERATES A RANDOM COLOR
 const random = () => {
   let randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -64,9 +76,11 @@ const random = () => {
 };
 
 color.oninput = (e) => setColor(e.target.value);
-colorBtn.onclick = () => setCurrent('color')
-rainbowBtn.onclick = () => setCurrent('rainbow')
+colorBtn.onclick = () => setCurrent("color");
+rainbowBtn.onclick = () => setCurrent("rainbow");
 clearBtn.onclick = () => reloadGrid();
+slider.onchange = (e) => changeSize(e.target.value)
+slider.onmousemove = (e) => updateSize(e.target.value);
 
 let active = false;
 document.body.onmousedown = () => (active = true);
@@ -102,7 +116,7 @@ function activeBtn(e) {
 
 window.onload = () => {
   makeRows(size);
-  h1.textContent = `${slider.value} x ${slider.value}`;
+  h1.textContent = val;
 };
 
 // if ((normal = "color")) e.target.style.backgroundColor = defaultColor;
