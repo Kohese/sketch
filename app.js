@@ -13,7 +13,7 @@ const clearBtn = document.getElementById("clear");
 // DECLARATIONS //
 const size = slider.value;
 const defaultColor = color.value;
-const defaultId = 'color'
+const defaultId = "color";
 
 let currentColor = defaultColor;
 let currentSize = size;
@@ -21,35 +21,40 @@ let currentId = defaultId;
 
 // FUNCTION TO RENDER THE GRID
 const makeRows = (rows) => {
-  container.style.setProperty("--grid-rows", rows);
-  container.style.setProperty("--grid-cols", rows);
+  container.style.gridTemplateColumns = `repeat(${size}, 1fr)`
+  container.style.gridTemplateRows = `repeat(${size}, 1fr)`
   range.insertBefore(h1, slider);
   for (let i = 0; i < rows * rows; i++) {
     const div = document.createElement("div");
-    div.addEventListener("click", (e) => {
-      e.target.style.backgroundColor = currentColor;
-    });
+    div.addEventListener("mouseover", change);
+    div.addEventListener('mousedown', change)
     container.appendChild(div).classList.add("grid-item");
   }
 };
 
 function setColor(e) {
   currentColor = e;
-  console.log(currentColor)
+  console.log(currentColor);
 }
 
 function reloadGrid() {
-  clear()
+  clear();
   makeRows(currentSize);
 }
 
 function setSize(newSize) {
-  currentSize = newSize
+  currentSize = newSize;
   return currentSize;
 }
 
+function setCurrent(mode) {
+  activeBtn(mode)
+  currentId = mode
+  console.log(currentId)
+}
+
 function clear() {
-  container.innerHTML = '';
+  container.innerHTML = "";
 }
 // GENERATES A RANDOM COLOR
 const random = () => {
@@ -58,24 +63,28 @@ const random = () => {
   return `#${randomColor}`;
 };
 
-color.oninput = (e) => setColor(e.target.value)
-colorBtn.onclick = (e) => updateBtn(e)
-rainbowBtn.onclick = (e) => updateBtn(e)
-clearBtn.onclick = () => clear()
+color.oninput = (e) => setColor(e.target.value);
+colorBtn.onclick = () => setCurrent('color')
+rainbowBtn.onclick = () => setCurrent('rainbow')
+clearBtn.onclick = () => reloadGrid();
 
 let active = false;
 document.body.onmousedown = () => (active = true);
 document.body.onmouseup = () => (active = false);
 
-function setBtn(e) {
-  activeBtn(e)
-  normal = e
-};
-
-function setBtn(e) {
-
+function change(e) {
+  console.log(currentColor);
+  if (e.type === "mouseover" && !active) return;
+  if (currentId === "rainbow") e.target.style.backgroundColor = random();
+  else if (currentId === "color") e.target.style.backgroundColor = currentColor;
 }
 
+function activeBtn(e) {
+  if (currentId === "rainbow") rainbowBtn.classList.remove("active");
+  if (currentId === "color") rainbowBtn.classList.remove("active");
+  if (e === "rainbow") rainbowBtn.classList.add("active");
+  if (e === "color") rainbowBtn.classList.add("active");
+}
 // color.value
 // rainbowBtn.addEventListener('click', () => {
 // div.addEventListener("click", (e) => {
@@ -87,6 +96,9 @@ function setBtn(e) {
 //   // active[e.target].style.backgroundColor = 'orange';
 // });
 
+// ("click", (e) => {
+//   e.target.style.backgroundColor = currentColor;
+// });
 
 window.onload = () => {
   makeRows(size);
