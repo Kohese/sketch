@@ -20,6 +20,7 @@ let currentColor = defaultColor;
 let currentSize = size;
 let currentId = defaultId;
 let val = `${slider.value} x ${slider.value}`;
+h1.classList.add('slider-text')
 
 // FUNCTION TO RENDER THE GRID
 const makeRows = (rows) => {
