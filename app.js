@@ -3,6 +3,7 @@ const container = document.getElementById("container");
 const slider = document.getElementById("slider");
 const range = document.getElementById("range");
 const h1 = document.createElement("h1");
+const span = document.getElementById('color_front')
 
 // BUTTONS //
 const color = document.getElementById("colorPicker");
@@ -35,7 +36,6 @@ const makeRows = (rows) => {
 
 function setColor(e) {
   currentColor = e;
-  console.log(currentColor);
 }
 
 function reloadGrid() {
@@ -55,7 +55,7 @@ function updateSize(e) {
 function setCurrent(mode) {
   activeBtn(mode);
   currentId = mode;
-  console.log(currentId);
+  console.log(currentId)
 }
 
 function changeSize(value) {
@@ -66,12 +66,13 @@ function changeSize(value) {
 
 function clear() {
   container.innerHTML = "";
+  colorBtn.classList.remove("active");
+  rainbowBtn.classList.remove("active");
 }
 
 // GENERATES A RANDOM COLOR
 const random = () => {
   let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-  console.log(randomColor);
   return `#${randomColor}`;
 };
 
@@ -85,61 +86,23 @@ slider.onmousemove = (e) => updateSize(e.target.value);
 let active = false;
 document.body.onmousedown = () => (active = true);
 document.body.onmouseup = () => (active = false);
+document.body.onmouseleave = () => (active = false);
 
 function change(e) {
-  console.log(currentColor);
   if (e.type === "mouseover" && !active) return;
   if (currentId === "rainbow") e.target.style.backgroundColor = random();
   else if (currentId === "color") e.target.style.backgroundColor = currentColor;
 }
 
 function activeBtn(e) {
-  if (currentId === "rainbow") rainbowBtn.classList.remove("active");
-  if (currentId === "color") rainbowBtn.classList.remove("active");
-  if (e === "rainbow") rainbowBtn.classList.add("active");
-  if (e === "color") rainbowBtn.classList.add("active");
+  if (currentId === "color") colorBtn.classList.remove("active");
+  else if (currentId === "rainbow") rainbowBtn.classList.remove("active");
+  if (e === "color") colorBtn.classList.add("active");
+  else if (e === "rainbow") rainbowBtn.classList.add("active");
 }
-// color.value
-// rainbowBtn.addEventListener('click', () => {
-// div.addEventListener("click", (e) => {
-//   e.target.classList.add('active')
-//     e.target.style.backgroundColor = random();
-//     e.target.style.cssText = ''
-//   });
-//   console.log(active)
-//   // active[e.target].style.backgroundColor = 'orange';
-// });
 
-// ("click", (e) => {
-//   e.target.style.backgroundColor = currentColor;
-// });
 
 window.onload = () => {
   makeRows(size);
   h1.textContent = val;
 };
-
-// if ((normal = "color")) e.target.style.backgroundColor = defaultColor;
-//   else if ((normal = "rainbow")) e.target.style.backgroundColor = random();
-
-// const changeColor = (e) => {
-//   console.log(e.target.id)
-//   normal = e.target.id
-//   if (e.type === "mouseover" && !active) return;
-//   switch(e.target.id) {
-//     case 'color':
-//       normal = e.target.id
-//       e.target.style.backgroundColor = defaultColor;
-//       console.log('do')
-//       return
-//     case 'rainbow':
-//       normal = e.target.id
-//       console.log('doo')
-//       return
-//     case 'clear':
-//       normal = e.target.id
-//       console.log('dooo')
-//       return
-//   }
-//   return normal
-// };

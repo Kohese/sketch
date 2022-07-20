@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  border: 1px solid red;
 }
 
 :root {
@@ -50,8 +49,18 @@ body {
 .body-container {
   margin: 64px 100px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 100px;
   align-items: center;
+}
+
+button {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.active {
+  box-shadow: rgb(183, 213, 255) 0px 3px 8px;
 }
 
 
@@ -60,12 +69,39 @@ body {
   display: flex;
 }
 
-.circle {
-  border: 2px solid blue;
-  width: 75px;
-  height: 75px;
-  padding: 16px;
+button,
+input[type='color'] {
+  transition: transform 0.1s ease-in-out;
+  background-color: transparent;
 }
+
+button:hover,
+input[type='color']:hover {
+  transform: scale(1.05);
+}
+
+input[type='color']:active {
+  transition: transform 0.05s ease-in-out;
+  transform: scale(1);
+}
+
+input[type='color'] {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 80px;
+  border: none;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 
 .options {
   display: flex;
@@ -85,12 +121,12 @@ body {
 button,
 input {
   width: 100%;
-  border: none;
   color: inherit;
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
   outline: none;
+
 }
 #range,
 #grid {
